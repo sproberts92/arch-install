@@ -12,11 +12,3 @@ fi
 # Set network time sync and timezone.
 timedatectl set-ntp true
 timedatectl set-timezone Europe/Amsterdam
-
-# Partition disks
-parted --script /dev/sda \
-	mklabel gpt \
-	mkpart ESP fat32 1MiB 513MiB \
-	set 1 boot on \
-	mkpart primary ext4 513MiB 100%
-
