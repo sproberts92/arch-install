@@ -3,4 +3,4 @@
 pacstrap /mnt base
 genfstab -U /mnt >> /mnt/etc/fstab
 
-arch-chroot /mnt "./arch-install-chroot.sh"
+cat arch-install-chroot.sh | arch-chroot /mnt
