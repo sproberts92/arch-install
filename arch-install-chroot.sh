@@ -4,7 +4,7 @@ declare -a locales=("en_AU.UTF-8" "en_GB.UTF-8" "en_US.UTF-8")
 
 for loc in "${locales[@]}"
 do
-	sed -i "/${loc}/s/^#//" "locale.gen"
+	sed -i "/${loc}/s/^#//" "/etc/locale.gen"
 done
 
 locale-gen
