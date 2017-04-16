@@ -10,3 +10,6 @@ done
 locale-gen
 
 echo "LANG=${language}" > "/etc/locale.conf"
+
+echo "${hostn}" > "/etc/hostname"
+sed -i "/::1/a 127.0.1.1\t${hostn}.localdomain\t${hostn}" hosts
