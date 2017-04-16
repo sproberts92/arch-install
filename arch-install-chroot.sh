@@ -1,12 +1,12 @@
 #!/bin/bash
 
-declare -a locales=("en_AU.UTF-8" "en_GB.UTF-8" "en_US.UTF-8")
+source arch-install.cfg
 
-for loc in "${locales[@]}"
+for loc in $locales
 do
 	sed -i "/${loc}/s/^#//" "/etc/locale.gen"
 done
 
 locale-gen
 
-echo "LANG=en_AU.UTF-8" > "/etc/locale.conf"
+echo "LANG=${language}" > "/etc/locale.conf"
