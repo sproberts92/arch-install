@@ -17,7 +17,7 @@ arch-chroot /mnt locale-gen
 arch-chroot /mnt echo "LANG=${language}" > "/etc/locale.conf"
 
 arch-chroot /mnt echo "${host_name}" > "/etc/hostname"
-arch-chroot /mnt sed -i "/::1/a 127.0.1.1\t${host_name}.localdomain\t${host_name}" hosts
+arch-chroot /mnt sed -i "/::1/a 127.0.1.1\t${host_name}.localdomain\t${host_name}" "/etc/hosts"
 
 arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=boot --bootloader-id=arch_grub
 arch-chroot /mnt grub-mkconfig -o "/boot/grub/grub.cfg"
