@@ -11,6 +11,8 @@ check_connection() {
 	fi
 }
 
+set -e
+
 systemctl start dhcpcd
 systemctl enable dhcpcd
 
@@ -21,3 +23,30 @@ do
 done
 
 echo "Connected ok."
+
+pacman -Syu
+
+source $1
+
+pacman -S --noconfirm ${packages[@]}
+
+sed -i '/wheel ALL=(ALL) ALL$/s/^# //' /etc/sudoers
+visudo --check
+
+if [[ $? != 0 ]]
+then
+	echo "/etc/sudoers update failed."
+	exit 1
+fi
+
+useradd -m -G wheel "${new_user}"
+
+sudo -u ${new_user} "mkdir /home/${new_user}/AUR"
+
+for pac in ${aur_packages[@]}
+do
+	cd "/home/${new_user}/AUR"
+	sudo -u ${new_user} git clone "https://aur.archlinux.org/${pac}.git" "/home/${new_user}/AUR/${pac}"
+	sudo -u ${new_user} makepkg
+	pacman -U --noconfirm "*.pkg.tar.xz"
+done
