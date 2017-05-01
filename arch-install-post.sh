@@ -12,10 +12,14 @@ check_connection() {
 }
 
 set -e
+source $1
 
+# Start network manager
+# To do: Switch to systemd-networkd.
 systemctl start dhcpcd
 systemctl enable dhcpcd
 
+# Wait until connection is active.
 until check_connection
 do
 	echo "Waiting for connection..."
@@ -25,8 +29,6 @@ done
 echo "Connected ok."
 
 pacman -Syu
-
-source $1
 
 pacman -S --noconfirm ${packages[@]}
 
