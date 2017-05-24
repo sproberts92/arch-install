@@ -43,7 +43,7 @@ fi
 
 useradd -m -G wheel "${new_user}"
 
-sudo -u ${new_user} "mkdir /home/${new_user}/AUR"
+sudo -u ${new_user} mkdir "/home/${new_user}/AUR"
 
 for pac in ${aur_packages[@]}
 do
