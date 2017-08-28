@@ -41,3 +41,6 @@ linux /vmlinuz-linux
 initrd /initramfs-linux.img
 options root=/dev/sda2 rw
 EOF'
+
+cp "$(dirname $(realpath $0))/arch-install-post.sh" '/mnt/root'
+cp "$(realpath $1)" '/mnt/root'
