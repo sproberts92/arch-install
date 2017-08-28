@@ -6,7 +6,7 @@ set -e
 # Load config.
 source $1
 
-pacstrap /mnt base grub efibootmgr
+pacstrap /mnt base
 genfstab -U /mnt >> /mnt/etc/fstab
 
 a_chroot() {
@@ -26,12 +26,18 @@ a_chroot 'echo "LANG='"${language}"'" > "/etc/locale.conf"'
 a_chroot 'echo "'"${host_name}"'" > "/etc/hostname"'
 a_chroot 'sed -i "/::1/a 127.0.1.1\t'"${host_name}"'.localdomain\t'"${host_name}"'" "/etc/hosts"'
 
-# To do: Switch to systemd-boot. 
-a_chroot 'grub-install --target=x86_64-efi --efi-directory=boot --bootloader-id=arch_grub'
-a_chroot 'grub-mkconfig -o "/boot/grub/grub.cfg"'
+a_chroot 'bootctl --path=/boot install'
 
-a_chroot 'mkinitcpio -p linux'
+a_chroot 'cat << EOF > /boot/loader/loader.conf
+default arch
+timeout 2
+editor 0
+EOF'
 
-# To do: Only perform this step if running in VirtualBox.
-a_chroot 'mkdir "/boot/EFI/boot"'
-a_chroot 'cp "/boot/EFI/arch_grub/grubx64.efi" "/boot/EFI/boot/bootx64.efi"'
+# To do: Use PARTUUID instead of sda2.
+a_chroot 'cat << EOF > /boot/loader/entries/arch.conf
+title Arch Linux
+linux /vmlinuz-linux
+initrd /initramfs-linux.img
+options root=/dev/sda2 rw
+EOF'
