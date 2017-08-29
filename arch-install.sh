@@ -6,7 +6,7 @@ set -e
 # Load config.
 source $1
 
-pacstrap /mnt base
+pacstrap /mnt base base-devel "${packages}"
 genfstab -U /mnt >> /mnt/etc/fstab
 
 a_chroot() {

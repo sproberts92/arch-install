@@ -28,10 +28,6 @@ done
 
 echo "Connected ok."
 
-pacman -Syu
-
-pacman -S --noconfirm ${packages[@]}
-
 sed -i '/wheel ALL=(ALL) ALL$/s/^# //' /etc/sudoers
 visudo --check
 
@@ -49,6 +45,8 @@ for pac in ${aur_packages[@]}
 do
 	cd "/home/${new_user}/AUR"
 	sudo -u ${new_user} git clone "https://aur.archlinux.org/${pac}.git" "/home/${new_user}/AUR/${pac}"
+	pushd "${pac}"
 	sudo -u ${new_user} makepkg
-	pacman -U --noconfirm "*.pkg.tar.xz"
+	pacman -U --noconfirm *.pkg.tar.xz
+	popd
 done
