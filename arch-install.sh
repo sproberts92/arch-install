@@ -42,7 +42,5 @@ initrd /initramfs-linux.img
 options root=/dev/sda2 rw
 EOF'
 
-a_chroot 'systemctl start dhcpcd'
-
 cp "$(dirname $(realpath $0))/arch-install-post.sh" '/mnt/root'
 cp "$(realpath $1)" '/mnt/root'
