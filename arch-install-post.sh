@@ -29,5 +29,11 @@ do
 	popd
 done
 
+alias config="/usr/bin/git --git-dir=/home/${new_user}/${dotfiles_dir}/ --work-tree=/home/${new_user}"
+git clone --bare "${dotfiles_repo}" "/home/${new_user}/${dotfiles_dir}"
+
+rm "/home/${new_user}/.bash_logout /home/${new_user}/.bash_profile /home/${new_user}/.bashrc"
+config checkout
+
 rm -- "$1"
 rm -- "$0"
