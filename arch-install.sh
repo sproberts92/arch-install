@@ -45,4 +45,4 @@ EOF'
 cp "$(dirname $(realpath $0))/arch-install-post.sh" '/mnt/root'
 cp "$(realpath $1)" '/mnt/root'
 
-a_chroot '~/arch-install-post.sh ~/arch-install-post.cfg'
+a_chroot "~/arch-install-post.sh ~/$(basename $1)"
