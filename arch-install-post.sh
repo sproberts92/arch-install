@@ -31,7 +31,7 @@ done
 
 git clone --bare "${dotfiles_repo}" "/home/${new_user}/${dotfiles_dir}"
 
-rm -f "/home/${new_user}/.bash_logout /home/${new_user}/.bash_profile /home/${new_user}/.bashrc"
+rm -f "/home/${new_user}/.bash_logout" "/home/${new_user}/.bash_profile" "/home/${new_user}/.bashrc"
 /usr/bin/git --git-dir="/home/${new_user}/${dotfiles_dir}/" --work-tree="/home/${new_user}" checkout
 
 rm -- "$1"
