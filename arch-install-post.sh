@@ -21,9 +21,8 @@ sudo -u ${new_user} mkdir "/home/${new_user}/AUR"
 
 for pac in ${aur_packages[@]}
 do
-	cd "/home/${new_user}/AUR"
 	sudo -u ${new_user} git clone "https://aur.archlinux.org/${pac}.git" "/home/${new_user}/AUR/${pac}"
-	pushd "${pac}"
+	pushd "/home/${new_user}/AUR"
 	sudo -u ${new_user} makepkg
 	pacman -U --noconfirm *.pkg.tar.xz
 	popd
