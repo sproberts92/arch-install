@@ -29,10 +29,10 @@ do
 	popd
 done
 
-git clone --bare "${dotfiles_repo}" "/home/${new_user}/${dotfiles_dir}"
+sudo -u "${new_user}" git clone --bare "${dotfiles_repo}" "/home/${new_user}/${dotfiles_dir}"
 
 rm -f "/home/${new_user}/.bash_logout" "/home/${new_user}/.bash_profile" "/home/${new_user}/.bashrc"
-/usr/bin/git --git-dir="/home/${new_user}/${dotfiles_dir}/" --work-tree="/home/${new_user}" checkout
+sudo -u "${new_user}" /usr/bin/git --git-dir="/home/${new_user}/${dotfiles_dir}/" --work-tree="/home/${new_user}" checkout
 
 rm -- "$1"
 rm -- "$0"
