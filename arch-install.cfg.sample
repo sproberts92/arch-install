@@ -1,3 +1,19 @@
 locales=""
 language=""
+timezone=""
 host_name=""
+new_user=""
+irc_user=""
+
+dotfiles_repo=""
+dotfiles_dir=""
+
+packages=(
+	""
+	""
+)
+
+aur_packages=(
+	""
+	""
+)
