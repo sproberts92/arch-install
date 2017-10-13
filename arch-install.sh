@@ -23,6 +23,9 @@ a_chroot 'locale-gen'
 
 a_chroot 'echo "LANG='"${language}"'" > "/etc/locale.conf"'
 
+a_chroot "ln -sf /usr/share/zoneinfo/${timezone} /etc/localtime"
+a_chroot "hwclock --systohc"
+
 a_chroot 'echo "'"${host_name}"'" > "/etc/hostname"'
 a_chroot 'sed -i "/::1/a 127.0.1.1\t'"${host_name}"'.localdomain\t'"${host_name}"'" "/etc/hosts"'
 
