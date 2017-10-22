@@ -21,11 +21,17 @@ sudo -u ${new_user} mkdir "/home/${new_user}/AUR"
 
 for pac in ${aur_packages[@]}
 do
-	sudo -u ${new_user} git clone "https://aur.archlinux.org/${pac}.git" "/home/${new_user}/AUR/${pac}"
-	pushd "/home/${new_user}/AUR/${pac}"
-	sudo -u ${new_user} makepkg
-	pacman -U --noconfirm *.pkg.tar.xz
-	popd
+	(
+		sudo -u ${new_user} git clone "https://aur.archlinux.org/${pac}.git" "/home/${new_user}/AUR/${pac}"
+		pushd "/home/${new_user}/AUR/${pac}"
+		source PKGBUILD && pacman -Sy --noconfirm --needed --asdeps "${makedepends[@]}" "${depends[@]}"
+		sudo -u ${new_user} PKGEXT=".pkg.tar" makepkg
+		pacman -U --noconfirm *.pkg.tar
+		popd
+	)
+	# Subshell to keep variables sourced from PKGBUILD local - pacman shouldn't be run in parallel.
+	# To do - git clones in parallel, makepkg too if possible.
+	wait
 done
 
 sudo -u "${new_user}" git clone --bare "${dotfiles_repo}" "/home/${new_user}/${dotfiles_dir}"
