@@ -37,13 +37,13 @@ timeout 2
 editor 0
 EOF'
 
-# To do: Use PARTUUID instead of sda2.
-a_chroot 'cat << EOF > /boot/loader/entries/arch.conf
+# To do: Use PARTUUID instead of sdxX.
+a_chroot "cat << EOF > /boot/loader/entries/arch.conf
 title Arch Linux
 linux /vmlinuz-linux
 initrd /initramfs-linux.img
-options root=/dev/sda2 rw
-EOF'
+options root=/dev/${device}2 rw
+EOF"
 
 cp "$(dirname $(realpath $0))/arch-install-post.sh" '/mnt/root'
 cp "$(realpath $1)" '/mnt/root'
