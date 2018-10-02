@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit if any individual command fails.
-set -e
+set -euo pipefail
 
 # Load config.
 source $1

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -euo pipefail
+
 source $1
 
 # Create partitions
