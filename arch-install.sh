@@ -29,6 +29,13 @@ a_chroot "hwclock --systohc"
 a_chroot 'echo "'"${host_name}"'" > "/etc/hostname"'
 a_chroot 'sed -i "/::1/a 127.0.1.1\t'"${host_name}"'.localdomain\t'"${host_name}"'" "/etc/hosts"'
 
+# Less elegant than using patch, but more robust to future changes to the default mkinitcpio.conf.
+if [ "${encrypted_root}" = true ]; then
+	a_chroot 'sed -i "/^HOOKS=/a HOOKS=(base systemd autodetect keyboard modconf block sd-encrypt filesystems fsck)" "/etc/mkinitcpio.conf"'
+	a_chroot 'sed -i "0,/^HOOKS=/s/^HOOKS=/#\tHOOKS=/" "/etc/mkinitcpio.conf"'
+	a_chroot 'mkinitcpio -p linux'
+fi
+
 a_chroot 'bootctl --path=/boot install'
 
 a_chroot 'cat << EOF > /boot/loader/loader.conf
