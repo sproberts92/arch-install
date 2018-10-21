@@ -48,8 +48,9 @@ EOF'
 a_chroot "cat << EOF > /boot/loader/entries/arch.conf
 title Arch Linux
 linux /vmlinuz-linux
+initrd /intel-ucode.img
 initrd /initramfs-linux.img
-options root=/dev/${device}2 rw
+options rd.luks.name=$(lsblk -ro FSTYPE,UUID | awk '/crypto_LUKS/ {print $2}')=cryptroot root=/dev/mapper/cryptroot quiet loglevel=0 vga=current ipv6.disable=1
 EOF"
 
 cp "$(dirname $(realpath $0))/arch-install-post.sh" '/mnt/root'
