@@ -44,7 +44,6 @@ timeout 2
 editor 0
 EOF'
 
-# To do: Use PARTUUID instead of sdxX.
 a_chroot "cat << EOF > /boot/loader/entries/arch.conf
 title Arch Linux
 linux /vmlinuz-linux
