@@ -4,8 +4,8 @@ set -euo pipefail
 
 source $1
 
-# Network manager
-systemctl enable dhcpcd
+# # Network manager
+# systemctl enable dhcpcd
 
 sed -i '/wheel ALL=(ALL) ALL$/s/^# //' /etc/sudoers
 visudo --check
