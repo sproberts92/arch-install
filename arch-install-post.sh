@@ -29,7 +29,7 @@ do
 		sudo -u ${new_user} PKGEXT=".pkg.tar" makepkg
 		pacman -U --noconfirm *.pkg.tar
 		popd
-	)
+	)||:
 	# Subshell to keep variables sourced from PKGBUILD local - pacman shouldn't be run in parallel.
 	# To do - git clones in parallel, makepkg too if possible.
 	wait
