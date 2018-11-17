@@ -35,6 +35,8 @@ do
 	wait
 done
 
+echo "export XDG_CONFIG_HOME=$HOME/.config" > "/etc/profile.d/xdg.sh"
+
 sudo -u "${new_user}" git clone --bare "${dotfiles_repo}" "/home/${new_user}/${dotfiles_dir}"
 
 rm -f "/home/${new_user}/.bash_logout" "/home/${new_user}/.bash_profile" "/home/${new_user}/.bashrc"
